@@ -2,11 +2,21 @@
 import {ref} from 'vue'
 import {useAuthStore} from '@/stores/auth'
 import { useRouter, useRoute } from 'vue-router'
+import {auth} from '../api'
   
   const authStore = useAuthStore()
   const user = ref({
     username: '',
     password: ''
+  })
+
+  const userRegister = ref({
+    firstName: '',
+    lastName: '',
+    username: '',
+    email: '',
+    password: '',
+    role: ''
   })
   const router = useRouter()
   const route = useRoute()
@@ -19,6 +29,19 @@ import { useRouter, useRoute } from 'vue-router'
           router.push('/posts');
     }
   }
+  function registerUser() {
+    const {registerUser: registerUserAPI} = auth();
+    registerUserAPI(userRegister.value).then(() => {
+      userRegister.value = {
+        firstName: '',
+        lastName: '',
+        username: '',
+        email: '',
+        password: '',
+        role: ''
+      }
+    })
+  }
 </script>
 
 <template>
@@ -26,12 +49,12 @@ import { useRouter, useRoute } from 'vue-router'
     <form class="container-form" @submit.prevent="login">
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>
-        <input type="text" class="form-control" id="username" placeholder="Enter your username" v-model="user.username">
+        <input type="text" class="form-control" id="username" placeholder="Enter your username" v-model="user.username" autocomplete="username">
       </div>
       <div class="mb-3">
         <label for="inputPassword" class="form-label">Password</label>
         <input type="password" id="inputPassword" class="form-control" aria-describedby="passwordHelpBlock"
-          placeholder="Enter your password" v-model="user.password">
+          placeholder="Enter your password" v-model="user.password" autocomplete="current-password">
       </div>
       <div>
         <button type="button" class="btn btn-forgot-password">Forgot Password</button>
@@ -39,31 +62,34 @@ import { useRouter, useRoute } from 'vue-router'
       </div>
     </form>
 
-    <form class="container-form">
+    <form class="container-form" @submit.prevent="registerUser">
       <h2 class="container-form__title">Sign up for a free account</h2>
       <div class="mb-3 row">
         <div class="col-lg-6">
-          <input type="email" class="form-control" placeholder="First Name">
+          <input type="text" class="form-control" placeholder="First Name" v-model="userRegister.firstName">
         </div>
         <div class="col-lg-6">
-          <input type="password" class="form-control" aria-describedby="passwordHelpBlock" placeholder="Last Name">
+          <input type="text" class="form-control" placeholder="Last Name" v-model="userRegister.lastName">
         </div>
       </div>
       <div class="mb-3">
-        <input type="email" class="form-control" aria-describedby="passwordHelpBlock" placeholder="Email">
+        <input type="text" class="form-control" placeholder="Username" v-model="userRegister.username">
       </div>
       <div class="mb-3">
-        <input type="password" class="form-control" aria-describedby="passwordHelpBlock" placeholder="Password">
+        <input type="email" class="form-control" placeholder="Email" v-model="userRegister.email">
       </div>
       <div class="mb-3">
-        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+        <input type="password" class="form-control" placeholder="Password" v-model="userRegister.password" autocomplete="current-password">
+      </div>
+      <div class="mb-3">
+        <select class="form-select form-select-lg mb-3" aria-label="form-select-lg example" v-model="userRegister.role">
           <option selected>Select Role</option>
           <option value="user">User</option>
           <option value="admin">Admin</option>
         </select>
       </div>
       <div class="mb-3">
-        <button type="button" class="btn btn-register">Register</button>
+        <button type="submit" class="btn btn-register">Register</button>
       </div>
     </form>
   </div>

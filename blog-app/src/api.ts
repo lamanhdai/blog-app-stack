@@ -43,7 +43,18 @@ export function auth () {
       password
     })
   }
+  const registerUser = ({username, firstName, lastName, email, password, role}: {usernamel:string, firstName:string, lastName:string, email:string, username: string, password: string, role: string}) => {
+    return apis.postAPI('/users', {
+      username,
+      firstName,
+      lastName,
+      email,
+      password,
+      role
+    })
+  }
   return {
-    login
+    login,
+    registerUser
   }
 }

@@ -10,7 +10,7 @@ import { PostsModule } from './posts/posts.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017',
+    MongooseModule.forRoot('mongodb://localhost:27017',
     {
       // user: 'brucelam',
       // pass: 'mKTsWPYjjkWn3PhM',

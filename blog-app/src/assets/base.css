@@ -11,3 +11,8 @@ body {
   padding-bottom: 100px;
   background: #f2f2f2;
 }
+
+img {
+  max-width: 100%;
+  height: auto;
+}
