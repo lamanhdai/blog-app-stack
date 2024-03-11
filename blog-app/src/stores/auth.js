@@ -3,6 +3,8 @@ import { defineStore } from 'pinia'
 import { jwtDecode } from "jwt-decode";
 import {auth} from '@/api'
 
+export const useAuthStore1 = defineStore('auth', {})
+
 export const useAuthStore = defineStore('auth', () => {
   const token = ref(null)
   const fullName = computed(() => {
@@ -25,4 +27,8 @@ export const useAuthStore = defineStore('auth', () => {
     fullName,
     logout
   }
-})
+},
+{
+  persist: true
+}
+)

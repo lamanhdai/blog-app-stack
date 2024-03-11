@@ -7,6 +7,7 @@
 
   const authStore = useAuthStore()
   const router = useRouter()
+  const route = useRoute()
   function logout() {
     authStore.logout();
     router.push('/signin');
@@ -26,7 +27,7 @@
       </div>
         <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#"><img :src="Home" alt="home"></a>
+            <a class="nav-link active" :class="{active: true}" aria-current="page" href="#"><img :src="Home" alt="home"></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#"><img :src="newPost" alt="new post"></a>
@@ -71,5 +72,9 @@
 }
 p {
   margin-bottom: 0;
+}
+.nav-link.active {
+  border: 2px solid #FFE600;
+  border-radius: 10px;
 }
 </style>
